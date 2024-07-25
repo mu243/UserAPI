@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Form</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    .error { color: red; }
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <h2 class="mb-4">User Form</h2>
+    <form id="userForm">
+      <!-- Form Fields -->
+      <!-- (same as before) -->
+      <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+    <div id="errorMessages" class="error mt-3"></div>
+  </div>
+
+  <script>
+    $(document).ready(function() {
+      $('#userForm').on('submit', function(e) {
+        e.preventDefault();
+        const userData = {
+          firstName: $('#firstName').val(),
+          lastName: $('#lastName').val(),
+          mobileNo: $('#mobileNo').val(),
+          email: $('#email').val(),
+          address: $('#address').val(),
+          street: $('#street').val(),
+          city: $('#city').val(),
+          state: $('#state').val(),
+          country: $('#country').val(),
+          loginId: $('#loginId').val(),
+          password: $('#password').val()
+        };
+        $.ajax({
+          type: 'POST',
+          url: '/api/users',
+          data: JSON.stringify(userData),
+          contentType: 'application/json',
+          success: function(response) {
+            if (response.success) {
+              window.location.href = '/display';
+            } else {
+              $('#errorMessages').empty();
+              for (const field in response.errors) {
+                $('#errorMessages').append(`<p>${field}: ${response.errors[field]}</p>`);
+              }
+            }
+          },
+          error: function(err) {
+            $('#errorMessages').empty();
+            $('#errorMessages').append('<p>Error saving user</p>');
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
