@@ -109,7 +109,7 @@ app.get('/api/users', (req, res) => {
 });
 
 // Serve index.html on root
-app.get('/', (req, res) => {
+app.get('/home', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
