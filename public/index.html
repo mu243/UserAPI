@@ -91,6 +91,8 @@
             if (response.success) {
               window.location.href = '/display';
             } else {
+              $('#errorMessages').append('<p>Error saving user</p>');
+
               $('#errorMessages').empty();
               for (const field in response.errors) {
                 $('#errorMessages').append(`<p>${field}: ${response.errors[field]}</p>`);
@@ -99,7 +101,9 @@
           },
           error: function(err) {
             $('#errorMessages').empty();
-            $('#errorMessages').append('<p>Error saving user</p>');
+            for (const field in err['responseJSON']['errors']) {
+                $('#errorMessages').append(`<p>${field}: ${err['responseJSON']['errors'][field]}</p>`);
+              }
           }
         });
       });
