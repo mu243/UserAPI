@@ -39,7 +39,7 @@ const userSchema = new mongoose.Schema({
       validator: function(v) {
         return /\S+@\S+\.\S+/.test(v);
       },
-      message: props => `${props.value} is not a valid email!`
+      message: props => `"${props.value}" is not a valid email!`
     },
     required: [true, 'User email required']
   },
@@ -54,7 +54,7 @@ const userSchema = new mongoose.Schema({
       validator: function(v) {
         return /^[a-zA-Z0-9]{8,}$/.test(v);
       },
-      message: props => `${props.value} is not a valid login ID!`
+      message: props => `"${props.value}" is not a valid login ID! Use 8 alpha numeric characters. `
     },
     required: [true, 'Login ID required']
   },
@@ -64,7 +64,8 @@ const userSchema = new mongoose.Schema({
       validator: function(v) {
         return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/.test(v);
       },
-      message: props => `${props.value} is not a valid password!`
+      message: props => `"${props.value}" is not a valid password! 
+      Your Password must have 6 characters which includes 1 upper case letter, 1 lower case letter, 1 special character.`
     },
     required: [true, 'Password required']
   },
