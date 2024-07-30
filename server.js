@@ -52,7 +52,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     validate: {
       validator: function(v) {
-        return /^[a-zA-Z0-9]{8,}$/.test(v);
+        return /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]){8,}$/.test(v);
       },
       message: props => `"${props.value}" is not a valid login ID! Use 8 alpha numeric characters. `
     },
